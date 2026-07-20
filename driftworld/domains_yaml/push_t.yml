@@ -1,0 +1,12 @@
+domain_id: 18
+object: T
+block_color:
+- 165
+- 28
+- 48
+target_color: Black
+bg_color: White
+obstacle_color: Gray
+block_scale: 30
+num_mislead: 0
+num_obstacle: 0

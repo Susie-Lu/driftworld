@@ -1,0 +1,51 @@
+model:
+  dir_name: pushT_driftworld
+  num_future_frames: 4
+  num_history_frames: 4
+  unet_name: UNet_PushT
+  temp_list: [0.02, 0.05, 0.2]
+  n_neg: 16
+  is_phase_2: False
+
+train:
+  seed: 1
+  num_epochs: 300
+  ckpt_every: 500
+  decay: 0.999
+
+opt:
+  beta2: 0.95
+  lr: 0.0000125
+  weight_decay: 0.01
+  warmup_steps: 500
+  grad_clip: 2.0
+
+data:
+  batch_size: 2
+  dataset_path_dir: "./pusht_data/world_model_data/dataset_domain/all_data"
+  pred_horizon: 8 # = model.num_history_frames + model.num_future_frames
+  obs_horizon: 1 # no padding before episode start (pad_before = obs_horizon-1)
+  action_horizon: 1 # no padding after episode end (pad_after = action_horizon-1)
+  num_train_demos: 500
+  resize_scale: 96
+  normalize_img: True
+
+dataloader:
+  num_workers: 6
+  prefetch_factor: 2
+  pin_memory: True
+
+wandb_info:
+  entity: "" # your wandb entity
+  project: "PushT"
+  name: "${model.dir_name}"
+  saved_run_id: "${output_dir}/wandb_run_id.json"
+  key: ""
+
+hydra:
+  run:
+    dir: "${output_dir}/${now:%Y-%m-%d}/${now:%H-%M-%S}"
+
+output_dir: "./pusht_checkpoints/${model.dir_name}"
+path_ckpt_latest: "${output_dir}/ckpt-latest.pth"
+path_ckpt_2nd_latest: "${output_dir}/ckpt-2nd-latest.pth"

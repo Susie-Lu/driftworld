@@ -1,0 +1,40 @@
+model: # Evaluate GPC-RANK performance of DriftWorld + ep100 diffusion policy
+  dir_name: gpc_rank_driftworld_for_ep100
+  num_future_frames: 4
+  num_history_frames: 4
+  unet_name: UNet_PushT
+  temp_list: [0.02, 0.05, 0.2]
+  n_neg: 16
+  is_phase_2: False
+
+train:
+  seed: 5
+  decay: 0.999
+
+policy:
+  num_diffusion_iters: 100
+
+env:
+  max_steps: 300
+
+ckpt:
+  policy_checkpoint: "./pusht_checkpoints/diffusion_policy_v1/ckpt_save/ckpt-ep100.pth"
+  world_model_checkpoint: "./pusht_checkpoints/pushT_driftworld/ckpt_save/ckpt-step1180500.pth"
+  reward_predictor_xy_checkpoint: "./pusht_checkpoints/reward/reward_predictor_xy.pth"
+  reward_predictor_angle_checkpoint: "./pusht_checkpoints/reward/reward_predictor_angle.pth"
+  use_official: False
+
+data:
+  pred_horizon: 16
+  obs_horizon: 2
+  action_horizon: 8
+  resize_scale: 96
+  normalize_img: True
+
+hydra:
+  run:
+    dir: "${output_dir}/${now:%Y-%m-%d}/${now:%H-%M-%S}"
+
+output_dir: "./pusht_outputs/${model.dir_name}"
+path_ckpt_latest: "${output_dir}/ckpt-latest.pth"
+path_ckpt_2nd_latest: "${output_dir}/ckpt-2nd-latest.pth"

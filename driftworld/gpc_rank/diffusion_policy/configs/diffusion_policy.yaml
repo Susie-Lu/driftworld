@@ -1,0 +1,45 @@
+model:
+  dir_name: diffusion_policy
+  num_diffusion_iters: 100
+
+train:
+  seed: 1
+  num_epochs: 300
+  ckpt_every: 10000
+  ckpt_save: 50
+  ckpt_save_min: 50
+  decay: 0.75
+
+opt:
+  lr: 0.0001
+  weight_decay: 0.000001
+  num_warmup_steps: 500
+
+data:
+  batch_size: 64
+  dataset_path_dir: "./diffusion_policy_data/domain18/domain18.zarr"
+  pred_horizon: 16
+  obs_horizon: 2
+  action_horizon: 8
+  num_train_demos: 500
+  resize_scale: 96
+
+dataloader:
+  num_workers: 4
+  prefetch_factor: 2
+  pin_memory: True
+
+wandb_info:
+  entity: "" # your wandb entity
+  project: "PushT"
+  name: "${model.dir_name}"
+  saved_run_id: "${output_dir}/wandb_run_id.json"
+  key: ""
+
+hydra:
+  run:
+    dir: "${output_dir}/${now:%Y-%m-%d}/${now:%H-%M-%S}"
+
+output_dir: "./pusht_checkpoints/${model.dir_name}"
+path_ckpt_latest: "${output_dir}/ckpt-latest.pth"
+path_ckpt_2nd_latest: "${output_dir}/ckpt-2nd-latest.pth"

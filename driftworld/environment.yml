@@ -1,0 +1,40 @@
+# DriftWorld for Push-T
+# Create with:  conda env create -f pusht_driftworld/environment.yml
+# Then:         conda activate driftworld
+name: driftworld
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      # PyTorch
+      - --extra-index-url https://download.pytorch.org/whl/cu128
+      - torch==2.11.0
+      - torchvision==0.26.0
+      # Config and experiment tracking
+      - hydra-core
+      - wandb
+      # Data and tensor utilities
+      # zarr: any 3.x works. Tested with 3.1.6.
+      - "numpy>=2,<3"
+      - "zarr>=3,<4"
+      - einops
+      - scipy
+      # Diffusion policy
+      - diffusers==0.37.1
+      # Push-T environment
+      - gymnasium
+      - pygame
+      - pymunk
+      - shapely
+      # Image and video
+      - opencv-python
+      - scikit-image
+      - imageio
+      - imageio-ffmpeg
+      - pillow
+      # Metrics
+      - lpips
+      # Progress bars
+      - tqdm
