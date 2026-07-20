@@ -42,6 +42,9 @@ The folder `driftworld` contains the code for training and evaluating DriftWorld
 ### DriftWorld on the other datasets
 Will be added soon!
 
+### Contact
+If you have any questions, feel free to contact me at `susielu [dot] research [at] gmail [dot] com`.
+
 ### Citation
 
 If you find this work useful in your research, please consider citing:
